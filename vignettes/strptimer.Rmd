@@ -1,0 +1,73 @@
+---
+title: "strptimer"
+author: "Brandon Taylor"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{strptimer}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Import the package. We will also make heavy usage of chaining: see magrittr's documentation.
+
+```{r}
+library(strptimer)
+library(magrittr)
+```
+
+# Base Components
+Let's see what kind of componenets we can use in our time format. 
+
+```{r}
+time_bases()
+```
+
+Each of these base time components can be used in a time format:
+
+```{r}
+time_format(year, month, day)
+```
+
+# Modifications
+Each base component can be modified in special ways. Let's say we are curious about the time options for modifying month:
+
+```{r}
+"month" %>% base_options
+```
+
+The default value will have all always have all no options select. Each option has a corresponding function, which can assign that option. Each such function takes only one argument, except for digits (see example below).
+
+```{r}
+time_format(month %>% short %>% name)
+```
+
+For the most part, time options should be self explanatory. For more information, codes can be looked up in the `?strptime` documentation. Note that many time formats are possible to build but do not have corresponding codes.
+
+```{r, error = TRUE}
+time_format(month %>% short %>% roman)
+```
+
+# Example
+
+Let's build a complicated date format just for fun:
+
+```{r}
+time_format(year %>% short %>% religious,
+            "/",
+            month %>% name %>% short,
+            "/",
+            day %>% roman,
+            
+            tab,
+            
+            hour %>% twelve %>% roman,
+            ":",
+            minute %>% roman,
+            ":",
+            second %>% digits(3),
+            " ",
+            am_pm,
+            " ",
+            timezone %>% name)
+```
