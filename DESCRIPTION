@@ -19,4 +19,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/bramtayl/strptimer
+BugReports: https://github.com/bramtayl/strptimer/issues
 RoxygenNote: 5.0.1
